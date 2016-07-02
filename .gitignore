@@ -1,0 +1,13 @@
+.idea/
+node_modules/
+.tmp/
+
+.DS_Store
+*-secret.json
+*.xml
+*.iml
+.name
+*.orig
+npm-debug.log
+.gulp-cache
+*_scsslint_tmp*
