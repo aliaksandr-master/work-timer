@@ -12,5 +12,9 @@
   "dependencies": {
     "johnny-five": "^0.9.59",
     "lodash": "^4.13.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.0",
+    "eslint": "^3.0.0"
   }
 }
