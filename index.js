@@ -39,12 +39,14 @@ const Loop = (board, base, handlers, done) =>
     };
 
 board.on('ready', () => {
-    var button = new five.Button(2);
-    var led1 = new five.Led(11);
-    var led2 = new five.Led(13);
+    const button = new five.Button(2);
+    const led1 = new five.Led(11);
+    const led2 = new five.Led(13);
+
+    let PERIOD = 0;
 
     const defaults = () => {
-        console.log('SET DEFAULTS');
+        PERIOD = 0;
         led2.stop();
         led2.off();
         led1.stop();
@@ -54,47 +56,50 @@ board.on('ready', () => {
             cuePoints: [0,   0.5,   1],
             keyFrames: [0,   2,     0]
         });
+
+        console.log('SET DEFAULTS');
     };
 
     const loop = Loop(board, 1, [
         () => {
+            PERIOD = 1;
             led1.pulse({
                 duration: 1000,
                 cuePoints: [0,   0.5,   1],
-                keyFrames: [0,   30,     0]
+                keyFrames: [0,   100,   0]
             });
         },
         () => {
+            PERIOD = 2;
             led1.pulse({
                 duration: 1000,
                 cuePoints: [0,   0.5,   1],
-                keyFrames: [0,   100,     0]
+                keyFrames: [0,   255,   0]
             });
-            led2.blink(2500);
+            led2.blink(500);
         }
     ], defaults);
 
     defaults();
 
     let offLoop = loop();
+    let counter = 0;
 
     button.on('hold', () => {
-        console.log('!!!!');
         offLoop();
 
         offLoop = loop();
+        counter = 0;
     });
 
-    let counter = 0;
     setInterval(() => {
-        console.log(++counter);
+        console.log(++counter, ' - ', PERIOD);
     }, 60 * 1000);
-
 
     board.on('exit', () => {
         led2.stop();
         led2.off();
         led1.stop();
         led1.off();
-    })
+    });
 });
